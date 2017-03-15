@@ -21,6 +21,14 @@ public class HelloResource {
     private MyBean bean;
 ```
 
+You can see the shared bean in action at http://localhost:8080/webapp2/rest/hello
+
 In order to work, you have to place two resource files in webapp2's `META-INF`
 - `beans.xml` an (at least) empty bean descriptor
 - `MANIFEST.MF` that declares the dependency to webapp1 (wildfly-syntax)
+
+## How to build and run?
+If you have docker installed, simply execute:
+```bash
+./build-and-run.sh
+```
