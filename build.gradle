@@ -1,0 +1,22 @@
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    // Support deployment into Wildfly
+    def deploymentsLink = file('.wildfly-deployments')
+    if (deploymentsLink.isFile()) {
+        apply plugin: 'war'
+        def deploymentsDir = deploymentsLink.readLines().find { line -> !line.startsWith('#') }
+        task deployToWildfly(type: Copy) {
+            description = "Copies ${war.archiveName} to $deploymentsDir"
+            group  "deploy"
+            from war
+            into file(deploymentsDir)
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}

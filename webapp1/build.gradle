@@ -1,0 +1,10 @@
+apply plugin: 'war'
+
+dependencies {
+    compile project(':api')
+    providedCompile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'javax.enterprise:cdi-api:1.2'
+    providedCompile 'javax.ejb:javax.ejb-api:3.2'
+}
+
