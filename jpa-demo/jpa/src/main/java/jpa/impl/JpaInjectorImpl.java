@@ -1,4 +1,4 @@
-package jpa.wiring;
+package jpa.impl;
 
 import static java.util.Objects.requireNonNull;
 
@@ -9,11 +9,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
 import jpa.api.WithPersistence;
-import jpa.impl.WithPersistenceJpa;
+import jpa.wiring.JpaInjector;
 
 @Startup
-@Singleton
-public class JpaInjector {
+@Singleton(name = "JpaInjector")
+public class JpaInjectorImpl implements JpaInjector {
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
     private WithPersistence withPersistence;
@@ -24,7 +24,7 @@ public class JpaInjector {
         withPersistence = new WithPersistenceJpa(entityManagerFactory);
     }
 
-    // We must not use CDI here
+    @Override
     public WithPersistence withPersistence() {
         return withPersistence;
     }

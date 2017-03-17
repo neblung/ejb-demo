@@ -1,6 +1,6 @@
 include 'api', 'webapp1', 'webapp2'
 
 // jpa-demo
-['jpa', 'view'].each { sub ->
+['api', 'jpa', 'view'].each { sub ->
     include "jpa-demo:$sub"
 }
