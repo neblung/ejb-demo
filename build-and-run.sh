@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 
+CONTAINER=$(basename `pwd`)
+
 set -e
 ./gradlew build
-container=$(docker run -d --name=ejb-demo -p 8080:8080 jboss/wildfly:10.1.0.Final)
-echo started container $container
-for i in webapp1 webapp2; do
-    docker cp $i/build/libs/$i.war $container:/opt/jboss/wildfly/standalone/deployments
+containerid=$(docker run -d --name=$CONTAINER -p 8080:8080 jboss/wildfly:10.1.0.Final)
+echo started container $containerid
+for war in $(find . -name '*.war'); do
+    docker cp $war $containerid:/opt/jboss/wildfly/standalone/deployments
 done
 
-echo webapps up and running
-echo 'curl localhost:8080/webapp1/rest/hello'
-echo 'curl localhost:8080/webapp2/rest/hello'
-echo 'view logs with: $> docker logs ejb-demo'
+echo $CONTAINER up and running
+echo "direct your browser to:"
+echo "   http://localhost:8080/webapp1"
+echo "   http://localhost:8080/webapp2"
+echo "   http://localhost:8080/view"
+echo "view logs with: \$> docker logs -f $CONTAINER"
 read -p "press <ENTER> to kill container" eatCR
-docker kill ejb-demo && docker rm ejb-demo
+docker rm -f $CONTAINER
 
