@@ -1,0 +1,6 @@
+apply plugin: 'war'
+
+dependencies {
+    providedCompile 'javax.ejb:javax.ejb-api:3.2'
+    providedCompile 'org.eclipse.persistence:javax.persistence:2.1.0'
+}
